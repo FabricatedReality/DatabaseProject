@@ -2,23 +2,31 @@ import java.util.Scanner;
 
 public class Launcher {
 	public static void main(String[] args) {
+		Database d = new Database();
+		if(!d.init()) {
+			System.out.println("Connection could not be established");
+			return;
+		}
 		Scanner s = new Scanner(System.in);
 		String input = "";
+		
 		while(!input.equals("q")) {
-			printUI();
+			printUserPrompt();
 			input = s.nextLine();
-			if(input.equals("l")) {
-				// Bulk load the data into database
+			switch(input) {
+			case "i":
+				break;
+			case "c":
+				break;
 			}
 		}
 		System.out.println("Bye!");
 		s.close();
 	}
 	
-	public static void printUI() {
-		System.out.print("\033[H\033[2J\n");
-        System.out.flush();
-		System.out.println("Enter l to load data into database\n" +
-			   	   "Enter q to quit program");
+	public static void printUserPrompt() {
+		System.out.println("Enter i to initialize and load data into database");
+		System.out.println("Enter c to clear database");
+		System.out.println("Enter q to quit program");
 	}
 }
