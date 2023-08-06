@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Launcher {
 	public static void main(String[] args) {
-		Database d = new Database();
+		Database d = Database.getInstance();
 		if(!d.init()) {
 			System.out.println("Connection could not be established");
 			return;
