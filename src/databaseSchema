@@ -17,8 +17,8 @@ create table User (
 	address varchar(200),
 	occupation varchar(50),
 	sin integer,
-	birthday varchar(6),
-	cardNumber integer,
+	birthday varchar(5),
+	cardNumber varchar(20),
 	cardHolder varchar(30),
 	cardExpire DATE
 );

@@ -64,7 +64,8 @@ public class Database {
 			String input = "";
 			while(s.hasNextLine()) {
 				input = input.concat(s.nextLine());
-				if(!input.isEmpty() && input.charAt(input.length() - 1) == ';') {
+				if(!input.isEmpty() && 
+				   input.charAt(input.length() - 1) == ';') {
 					executeQuery(input);
 					input = "";
 				}
