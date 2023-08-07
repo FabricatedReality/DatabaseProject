@@ -4,10 +4,10 @@ create table Listing (
 	lid integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
     type varchar(15) NOT NULL,
     amenities integer NOT NULL,
-    coordinate POINT,
-    postal varchar(8),
-    city varchar(100),
-    country varchar(64),
+    coordinate POINT NOT NULL,
+    postal varchar(8) NOT NULL,
+    city varchar(100) NOT NULL,
+    country varchar(64) NOT NULL,
     name varchar(100)
 );
 
@@ -17,20 +17,20 @@ create table User (
 	address varchar(200),
 	occupation varchar(50),
 	sin integer,
-	birthday carchar(6),
+	birthday varchar(6),
 	cardNumber integer,
 	cardHolder varchar(30),
 	cardExpire DATE
 );
 
 create table Calendar (
+	cid integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	lid integer NOT NULL,
 	owner integer NOT NULL,
 	renter integer,
-	start DATE NOT NULL,
+	start DATE,
 	end DATE,
-	price integer,
-	PRIMARY KEY(aid, start)
+	price integer
 );
 
 create table ListComment (

@@ -1,6 +1,9 @@
 import java.util.Scanner;
 
 public class Launcher {
+	private static final String SCHEMA_PATH = "src/databaseSchema";
+	private static final String INSERT_PATH = "src/databaseItems";
+	
 	public static void main(String[] args) {
 		Database d = Database.getInstance();
 		if(!d.init()) {
@@ -15,6 +18,9 @@ public class Launcher {
 			input = s.nextLine();
 			switch(input) {
 			case "i":
+				if(d.executeFromFile(SCHEMA_PATH))
+				//d.executeFromFile(INSERT_PATH);
+					System.out.println("Initialize success!");
 				break;
 			case "c":
 				break;
