@@ -24,10 +24,7 @@ public class Launcher {
 
 	private static void frontPage(Database d, Scanner s, String input) {
 		while(!input.equals("q")) {
-			System.out.println("Enter i to initialize and load data into database");
-			System.out.println("Enter r to register");
-			System.out.println("Enter l to log in");
-			System.out.println("Enter q to quit program");
+			printFrontPagePrompt();
 			
 			input = s.nextLine();
 			switch(input) {
@@ -37,85 +34,42 @@ public class Launcher {
 					System.out.println("Initialize success!");
 				break;
 			case "r":
-				dashboard(s, register(s));
+				dashboard(s, User.register(s));
 				break;
 			case "l":
-				dashboard(s, login(s));
+				dashboard(s, User.login(s));
 				break;
 			}
 		}
 	}
 	
-	public static void dashboard(Scanner s, int uid) {
-		if(uid <=0)
+	public static void dashboard(Scanner s, User u) {
+		if(u == null)
 			return;
 		
 		String input = "";
 		System.out.println();
-		while(!input.equals("s")) {
-			System.out.println("Enter l to enlist a place");
-			System.out.println("Enter b to book a listing");
-			System.out.println("Enter s to go to settings");
-			System.out.println("Enter c to comment/rate a place");
-			System.out.println("Enter p to comment/rate a person");
-			System.out.println("Enter s to sign out");
+		while(!input.equals("o")) {
+			printDashboardPrompt();
 			
 			input = s.nextLine();
-		}
-	}
-	
-	public static int login(Scanner s) {
-		Database d = Database.getInstance();
-		try {
-			String queryStr = "SELECT uid FROM User"
-							+ " WHERE username = ? AND password = ?";
-			PreparedStatement p = d.getStatement(queryStr);
-			
-			System.out.println("enter username");
-			String user = s.nextLine();
-			System.out.println("enter password");
-			String password = s.nextLine();
-			
-			p.setString(1, user);
-			p.setString(2, password);
-			ResultSet r = p.executeQuery();
-			// Check if password is valid
-			if(!r.next()) {
-				System.out.println("Invalid password or username");
-				return -1;
+			switch(input) {
+			case "":
 			}
-			return r.getInt("uid");
-		} catch (SQLException e) {
-			System.err.println("Login query failure!");
-			e.printStackTrace();
-			return -1;
 		}
 	}
 	
-	public static int register(Scanner s) {
-		Database d = Database.getInstance();
-		try {
-			String queryStr = "INSERT INTO User (name, address, occupation, sin, birthday, cardNumber, cardHolder, cardExpire, username, password)"
-					        + "VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ?, ?)";
-			PreparedStatement p = d.getStatement(queryStr);
-			
-			System.out.println("enter username");
-			String user = s.nextLine();
-			System.out.println("enter password");
-			String password = s.nextLine();
-			
-			p.setString(1, user);
-			p.setString(2, password);
-			p.execute();
-			return 24;
-		} catch (SQLException e) {
-			System.err.println("Login query failure!");
-			e.printStackTrace();
-			return -1;
-		}
+	
+
+	private static void printDashboardPrompt() {
+		System.out.println("Enter l to enlist a place");
+		System.out.println("Enter b to book a listing");
+		System.out.println("Enter h to look at history");
+		System.out.println("Enter s to go to settings");
+		System.out.println("Enter o to sign out");
 	}
 	
-	public static void printUserPrompt() {
+	private static void printFrontPagePrompt() {
 		System.out.println("Enter i to initialize and load data into database");
 		System.out.println("Enter r to register");
 		System.out.println("Enter l to log in");
