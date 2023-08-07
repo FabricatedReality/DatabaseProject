@@ -53,28 +53,28 @@ VALUES
     ('guesthouse', 262143, POINT(51.5074, -0.1278), 'SW1A 1AY', 'London', 'UK', 'Westminster ''Retreat'''),
     ('house', 32767, POINT(40.7128, -74.0060), '10025', 'New York', 'USA', 'Uptown ''Sanctuary''');
     
-INSERT INTO User (name, address, occupation, sin, birthday, cardNumber, cardHolder, cardExpire)
+INSERT INTO User (name, address, occupation, sin, birthday, cardNumber, cardHolder, cardExpire, username, password)
 VALUES
-    ('John Smith', '123 Main St, Apt 4B, Anytown, USA', 'Software Engineer', 123456789, '01-01', 1234567890123456, 'John Smith', '2023-12-31'),
-    ('Jane Doe', '456 Elm St, Suite 10, Another City, USA', 'Doctor', 987654321, '03-05', 9876543210987654, 'Jane Doe', '2024-09-30'),
-    ('Michael Johnson', '789 Oak Rd, Unit 7, Townsville, USA', 'Teacher', 234567890, '08-10', 2345678901234567, 'Michael Johnson', '2025-06-15'),
-    ('Emily Williams', '567 Pine Ave, Apt 15C, Villageville, USA', 'Artist', 345678901, '04-25', 3456789012345678, 'Emily Williams', '2026-11-28'),
-    ('David Brown', '890 Maple Dr, Floor 3, Suburbia, USA', 'Accountant', 456789012, '11-22', 4567890123456789, 'David Brown', '2027-08-22'),
-    ('Sarah Jones', '234 Birch Lane, Suite 2, Countryside, USA', 'Lawyer', 567890123, '07-01', 5678901234567890, 'Sarah Jones', '2028-05-10'),
-    ('Robert Wilson', '678 Cedar St, Apt 8D, Metropolitan City, USA', 'Manager', 678901234, '09-25', 6789012345678901, 'Robert Wilson', '2029-02-17'),
-    ('Megan Davis', '456 Maple Rd, Unit 12, Urbanville, USA', 'Writer', 789012345, '01-19', 7890123456789012, 'Megan Davis', '2030-07-07'),
-    ('William Miller', '345 Oak Ave, Floor 5, Downtown, USA', 'Chef', 890123456, '05-28', 8901234567890123, 'William Miller', '2031-04-03'),
-    ('Olivia Taylor', '123 Pine Rd, Suite 20, City Center, USA', 'Nurse', 901234567, '12-12', 9012345678901234, 'Olivia Taylor', '2032-01-19'),
-    ('Ethan White', '789 Cedar Lane, Apt 6A, Suburbia, USA', 'Engineer', 678901234, '02-14', 1234567812345678, 'Ethan White', '2023-08-15'),
-    ('Ava Anderson', '567 Elm Rd, Suite 22, Downtown, USA', 'Student', 789012345, '06-10', 2345678923456789, 'Ava Anderson', '2024-11-30'),
-    ('Liam Martinez', '890 Oak St, Unit 3C, Metropolis, USA', 'Artist', 901234567, '09-20', 3456789034567890, 'Liam Martinez', '2025-06-22'),
-    ('Sophia Robinson', '234 Pine Ave, Apt 18B, Townsville, USA', 'Teacher', 123456789, '04-12', 4567890145678901, 'Sophia Robinson', '2026-09-14'),
-    ('Noah Harris', '678 Maple Dr, Floor 2, Urbanville, USA', 'Doctor', 987654321, '07-07', 5678901256789012, 'Noah Harris', '2027-12-18'),
-    ('Isabella Lee', '123 Birch Rd, Suite 8, Villageville, USA', 'Lawyer', 234567890, '10-30', 6789012367890123, 'Isabella Lee', '2028-07-25'),
-    ('James Walker', '456 Cedar St, Apt 5D, Countryside, USA', 'Writer', 345678901, '12-05', 7890123478901234, 'James Walker', '2029-04-09'),
-    ('Olivia Miller', '789 Elm Lane, Unit 14, Anytown, USA', 'Chef', 456789012, '02-18', 8901234589012345, 'Olivia Miller', '2030-11-12'),
-    ('Lucas Wilson', '567 Oak Ave, Floor 1, Suburbia, USA', 'Accountant', 567890123, '05-07', 9012345690123456, 'Lucas Wilson', '2031-08-07'),
-    ('Emma Jackson', '890 Pine Rd, Suite 12, Metropolis, USA', 'Manager', 678901234, '09-09', 1234567801234567, 'Emma Jackson', '2032-03-21');
+    ('John Smith', '123 Main St, Apt 4B, Anytown, USA', 'Software Engineer', 123456789, '01-01', 1234567890123456, 'John Smith', '2023-12-31', 'user123', 'passw0rd'),
+    ('Jane Doe', '456 Elm St, Suite 10, Another City, USA', 'Doctor', 987654321, '03-05', 9876543210987654, 'Jane Doe', '2024-09-30', 'johndoe', 'secure123'),
+    ('Michael Johnson', '789 Oak Rd, Unit 7, Townsville, USA', 'Teacher', 234567890, '08-10', 2345678901234567, 'Michael Johnson', '2025-06-15', 'coolgirl', 'p@ssw0rd'),
+    ('Emily Williams', '567 Pine Ave, Apt 15C, Villageville, USA', 'Artist', 345678901, '04-25', 3456789012345678, 'Emily Williams', '2026-11-28', 'techguru', '12345abc'),
+    ('David Brown', '890 Maple Dr, Floor 3, Suburbia, USA', 'Accountant', 456789012, '11-22', 4567890123456789, 'David Brown', '2027-08-22', 'skywalker', 'pass1234'),
+    ('Sarah Jones', '234 Birch Lane, Suite 2, Countryside, USA', 'Lawyer', 567890123, '07-01', 5678901234567890, 'Sarah Jones', '2028-05-10', 'gamer123', 'qwerty123'),
+    ('Robert Wilson', '678 Cedar St, Apt 8D, Metropolitan City, USA', 'Manager', 678901234, '09-25', 6789012345678901, 'Robert Wilson', '2029-02-17', 'flowerpower', 'letmein456'),
+    ('Megan Davis', '456 Maple Rd, Unit 12, Urbanville, USA', 'Writer', 789012345, '01-19', 7890123456789012, 'Megan Davis', '2030-07-07', 'codingninja', 'Pa$$w0rd'),
+    ('William Miller', '345 Oak Ave, Floor 5, Downtown, USA', 'Chef', 890123456, '05-28', 8901234567890123, 'William Miller', '2031-04-03', 'sunnyday', 'sunshine'),
+    ('Olivia Taylor', '123 Pine Rd, Suite 20, City Center, USA', 'Nurse', 901234567, '12-12', 9012345678901234, 'Olivia Taylor', '2032-01-19', 'panda_lover', 'p@ndaP@ss'),
+    ('Ethan White', '789 Cedar Lane, Apt 6A, Suburbia, USA', 'Engineer', 678901234, '02-14', 1234567812345678, 'Ethan White', '2023-08-15', 'musiclover', 'melody2023'),
+    ('Ava Anderson', '567 Elm Rd, Suite 22, Downtown, USA', 'Student', 789012345, '06-10', 2345678923456789, 'Ava Anderson', '2024-11-30', 'coffeelover', 'C0ffeeTime'),
+    ('Liam Martinez', '890 Oak St, Unit 3C, Metropolis, USA', 'Artist', 901234567, '09-20', 3456789034567890, 'Liam Martinez', '2025-06-22', 'bookworm', 'Read123!'),
+    ('Sophia Robinson', '234 Pine Ave, Apt 18B, Townsville, USA', 'Teacher', 123456789, '04-12', 4567890145678901, 'Sophia Robinson', '2026-09-14', 'fitnessfan', 'Workout567'),
+    ('Noah Harris', '678 Maple Dr, Floor 2, Urbanville, USA', 'Doctor', 987654321, '07-07', 5678901256789012, 'Noah Harris', '2027-12-18', 'travelbug', 'Adventur3!'),
+    ('Isabella Lee', '123 Birch Rd, Suite 8, Villageville, USA', 'Lawyer', 234567890, '10-30', 6789012367890123, 'Isabella Lee', '2028-07-25', 'foodie', 'YummyF00d'),
+    ('James Walker', '456 Cedar St, Apt 5D, Countryside, USA', 'Writer', 345678901, '12-05', 7890123478901234, 'James Walker', '2029-04-09', 'naturelover', 'Gre3nScene'),
+    ('Olivia Miller', '789 Elm Lane, Unit 14, Anytown, USA', 'Chef', 456789012, '02-18', 8901234589012345, 'Olivia Miller', '2030-11-12', 'artsy', 'P@inting123'),
+    ('Lucas Wilson', '567 Oak Ave, Floor 1, Suburbia, USA', 'Accountant', 567890123, '05-07', 9012345690123456, 'Lucas Wilson', '2031-08-07', 'starwarsfan', 'MayTheF0rce'),
+    ('Emma Jackson', '890 Pine Rd, Suite 12, Metropolis, USA', 'Manager', 678901234, '09-09', 1234567801234567, 'Emma Jackson', '2032-03-21', 'captain', 'CapnCrunch');
 
 INSERT INTO Calendar (lid, owner, renter, start, end, price)
 VALUES

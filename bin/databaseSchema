@@ -20,7 +20,9 @@ create table User (
 	birthday varchar(5),
 	cardNumber varchar(20),
 	cardHolder varchar(30),
-	cardExpire DATE
+	cardExpire DATE,
+	username varchar(24) UNIQUE,
+	password varchar(32)
 );
 
 create table Calendar (

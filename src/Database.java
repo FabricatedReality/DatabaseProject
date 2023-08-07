@@ -39,14 +39,18 @@ public class Database {
 		return true;
 	}
 	
-	public PreparedStatement getStatement(String query) throws SQLException {
-		return con.prepareStatement(query);
+	public void disconnect() {
+		try {
+			con.close();
+			con = null;
+		} catch (SQLException e) {
+			System.err.println("Disconnecting from sql database failed");
+			e.printStackTrace();
+		}
 	}
 	
-	public ResultSet executeStatement(PreparedStatement p) throws SQLException {
-		ResultSet r = p.executeQuery();
-		p.close();
-		return r;
+	public PreparedStatement getStatement(String query) throws SQLException {
+		return con.prepareStatement(query);
 	}
 	
 	// Executes query without any return, used for setting up database
