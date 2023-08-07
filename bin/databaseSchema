@@ -1,0 +1,50 @@
+Drop TABLE IF EXISTS Listing, User, Calendar, ListComment, UserComment;
+
+create table Listing (
+	lid integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    type varchar(15) NOT NULL,
+    amenities integer NOT NULL,
+    coordinate POINT,
+    postal varchar(8),
+    city varchar(100),
+    country varchar(64),
+    name varchar(100)
+);
+
+create table User (
+	uid integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name varchar(100),
+	address varchar(200),
+	occupation varchar(50),
+	sin integer,
+	birthday carchar(6),
+	cardNumber integer,
+	cardHolder varchar(30),
+	cardExpire DATE
+);
+
+create table Calendar (
+	lid integer NOT NULL,
+	owner integer NOT NULL,
+	renter integer,
+	start DATE NOT NULL,
+	end DATE,
+	price integer,
+	PRIMARY KEY(aid, start)
+);
+
+create table ListComment (
+	lid integer NOT NULL,
+	uid integer NOT NULL,
+	rating integer,
+	comment TEXT,
+	PRIMARY KEY(lid, uid)
+);
+
+create table UserComment (
+	commenter integer NOT NULL,
+	commented integer NOT NULL,
+	comment TEXT,
+	rating integer,
+	PRIMARY KEY(commenter, commented)
+);
