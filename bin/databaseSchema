@@ -4,7 +4,8 @@ create table Listing (
 	lid integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
     type varchar(15) NOT NULL,
     amenities integer NOT NULL,
-    coordinate POINT NOT NULL,
+    latitude double NOT NULL UNIQUE,
+    longitude double NOT NULL UNIQUE,
     postal varchar(8) NOT NULL,
     city varchar(100) NOT NULL,
     country varchar(64) NOT NULL,
@@ -21,8 +22,8 @@ create table User (
 	cardNumber varchar(20),
 	cardHolder varchar(30),
 	cardExpire DATE,
-	username varchar(24) UNIQUE,
-	password varchar(32)
+	username varchar(24) NOT NULL UNIQUE,
+	password varchar(32) NOT NULL
 );
 
 create table Calendar (

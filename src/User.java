@@ -50,8 +50,7 @@ public class User {
 	
 	private static User retrieveUser(String user, String password) throws SQLException {
 		Database d = Database.getInstance();
-		String queryStr = "SELECT * FROM User"
-				+ " WHERE username = ? AND password = ?";
+		String queryStr = "SELECT * FROM User WHERE username = ? AND password = ?";
 		PreparedStatement p = d.getStatement(queryStr);
 		p.setString(1, user);
 		p.setString(2, password);
@@ -121,7 +120,7 @@ public class User {
 	public static User register(Scanner s) {
 		Database d = Database.getInstance();
 		try {
-			String user = validifyUsername(s, d);
+			String user = validifyUsername(s);
 			
 			String queryStr = "INSERT INTO User (name, address, occupation, sin, birthday, cardNumber, cardHolder, cardExpire, username, password)"
 					        + "VALUES (NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ?, ?)";
@@ -143,7 +142,8 @@ public class User {
 		}
 	}
 
-	private static String validifyUsername(Scanner s, Database d) throws SQLException {
+	private static String validifyUsername(Scanner s) throws SQLException {
+		Database d = Database.getInstance();
 		String queryStr = "SELECT * FROM User WHERE username = ?";
 		while(true) {
 			PreparedStatement p = d.getStatement(queryStr);
@@ -159,5 +159,49 @@ public class User {
 				return user;
 			System.out.println("username already exist");
 		}
+	}
+
+	public int getUid() {
+		return uid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getOccupation() {
+		return occupation;
+	}
+
+	public int getSin() {
+		return sin;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public String getCardHolder() {
+		return cardHolder;
+	}
+
+	public String getExpirationDate() {
+		return expirationDate;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }

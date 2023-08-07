@@ -3,7 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Launcher {
+public class Application {
 	private static final String SCHEMA_PATH = "src/databaseSchema";
 	private static final String INSERT_PATH = "src/databaseEntities";
 	
@@ -16,13 +16,14 @@ public class Launcher {
 		Scanner s = new Scanner(System.in);
 		String input = "";
 		
-		frontPage(d, s, input);
+		frontPage(s, input);
 		System.out.println("Bye!");
 		d.disconnect();
 		s.close();
 	}
 
-	private static void frontPage(Database d, Scanner s, String input) {
+	private static void frontPage(Scanner s, String input) {
+		Database d = Database.getInstance();
 		while(!input.equals("q")) {
 			printFrontPagePrompt();
 			
@@ -43,7 +44,7 @@ public class Launcher {
 		}
 	}
 	
-	public static void dashboard(Scanner s, User u) {
+	private static void dashboard(Scanner s, User u) {
 		if(u == null)
 			return;
 		
@@ -54,12 +55,18 @@ public class Launcher {
 			
 			input = s.nextLine();
 			switch(input) {
-			case "":
+			case "l":
+				Listing.enlistListing(s);
+				break;
+			case "b":
+				break;
+			case "h":
+				break;
+			case "s":
+				break;
 			}
 		}
 	}
-	
-	
 
 	private static void printDashboardPrompt() {
 		System.out.println("Enter l to enlist a place");
