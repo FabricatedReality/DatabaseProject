@@ -103,13 +103,13 @@ public class User {
 		p.setString(3, s.nextLine());
 		System.out.println("enter sin");
 		p.setInt(4, Integer.parseInt(s.nextLine()));
-		System.out.println("enter birthday");
+		System.out.println("enter birthday (MM-DD)");
 		p.setString(5, s.nextLine());
 		System.out.println("enter cardNumber");
 		p.setString(6, s.nextLine());
 		System.out.println("enter cardHolder");
 		p.setString(7, s.nextLine());
-		System.out.println("enter cardExpire");
+		System.out.println("enter cardExpire (YYYY-MM-DD)");
 		p.setString(8, s.nextLine());
 		
 		p.execute();

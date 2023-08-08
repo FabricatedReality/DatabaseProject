@@ -4,12 +4,13 @@ create table Listing (
 	lid integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
     type varchar(15) NOT NULL,
     amenities integer NOT NULL,
-    latitude double NOT NULL UNIQUE,
-    longitude double NOT NULL UNIQUE,
+    latitude double NOT NULL,
+    longitude double NOT NULL,
     postal varchar(8) NOT NULL,
     city varchar(100) NOT NULL,
     country varchar(64) NOT NULL,
-    name varchar(100)
+    name varchar(100),
+    CONSTRAINT coordinates UNIQUE(latitude, longitude)
 );
 
 create table User (
