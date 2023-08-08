@@ -68,20 +68,105 @@ public class Application {
 				searchList(s);
 				break;
 			case "h":
-				break;
-			case "s":
+				checkHistory(s);
 				break;
 			}
 		}
+		u = null;
 	}
 	
+	private static void checkHistory(Scanner s) {
+		String input = "";
+		String filter = 
+		"WHERE ((Calendar.renter = " + u.getUid() +") OR (Calendar.owner = " + u.getUid() +"))";
+		while(!input.equals("b")) {
+			ResultSet r = Listing.getListings(filter);
+			int numListing = printListHistory(r);
+			if(numListing > 0)
+				System.out.println("Enter number from 1-" + numListing + " to modify");
+			else
+				System.out.println("There are no listings");
+			System.out.println("Enter b to go back");
+			
+			input = s.nextLine();
+			try {
+				if(!input.equals("b")) {
+					int index = Integer.parseInt(input);
+					r.absolute(index);
+					modifyBooking(s, r);
+				}
+				r.close();
+			} catch(Exception e) {
+				System.out.println("Invalid input!");
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void modifyBooking(Scanner s, ResultSet r) throws SQLException {
+		Database d = Database.getInstance();
+		boolean isOwner = r.getInt(3) == u.getUid();
+		System.out.println("Enter c to cancel booking/listing");
+		if(isOwner) {
+			System.out.println("Enter p to change pricing");
+			System.out.println("Enter d to change availability");
+		}
+		System.out.println("Enter b to go back");
+		System.out.println(r.getInt(4));
+		switch(s.nextLine()) {
+		case "c":
+			PreparedStatement p = d.getStatement("UPDATE Calendar SET renter = NULL WHERE cid = ?");
+			p.setInt(1, r.getInt(1));
+			p.execute();
+			break;
+		case "p":
+			if(r.getInt(4) != 0) {
+				System.out.println("List booked already!");
+				break;
+			}
+			PreparedStatement p1 = d.getStatement("UPDATE Calendar SET price = ? WHERE cid = ?");
+			System.out.println("Enter new price");
+			p1.setString(1, s.nextLine());
+			p1.setInt(2, r.getInt(1));
+			p1.execute();
+			break;
+		case "d":
+			if(r.getInt(4) != 0) {
+				System.out.println("List booked already!");
+				break;
+			}
+			PreparedStatement p2 = d.getStatement("UPDATE Calendar SET start = ?, end = ? WHERE cid = ?");
+			System.out.println("Enter start date (YYYY-MM-DD)");
+			p2.setString(1, s.nextLine());
+			System.out.println("Enter end date (YYYY-MM-DD)");
+			p2.setString(2, s.nextLine());
+			p2.setInt(3, r.getInt(1));
+			p2.execute();
+			break;
+		case "b":
+			return;
+		}
+	}
+	
+	private static int printListHistory(ResultSet r) {
+		int i = 1;
+		try {
+			for(;r.next();i++)
+				System.out.println(i + ". "+r.getString(16) + ", start date: " + 
+								   r.getString(5).toString() + ", end date:" + 
+								   r.getDate(6).toString());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return i - 1;
+	}
+
 	private static void searchList(Scanner s) {
 		String input = "";
-		String filter = "";
+		String filter = "WHERE Calendar.renter IS NULL";
 		while(!input.equals("b")) {
 			ResultSet r = Listing.getListings(filter);
 			int numListing = printListings(r);
-				
 			searchListPrompt(numListing);
 			
 			input = s.nextLine();
@@ -91,7 +176,7 @@ public class Application {
 				} else if(!input.equals("b")) {
 					int index = Integer.parseInt(input);
 					r.absolute(index);
-					Listing.displayInfo(r.getInt(1));
+					Listing.displayInfo(r);
 					listPage(s, r.getInt(1));
 				r.close();
 			}
@@ -189,6 +274,7 @@ public class Application {
 			input = s.nextLine();
 			if(input.equals("y")) {
 				Listing.updateInfo(lid, u.getUid());
+				break;
 			}
 		}
 	}
@@ -197,15 +283,15 @@ public class Application {
 		int i = 1;
 		try {
 			for(;r.next();i++)
-				System.out.println(i+". "+r.getString(2) + ", " + r.getString(3) + " - $" + r.getInt(4));
+				System.out.println(i+". "+r.getString(14) + ", " + r.getString(15) + " - $" + r.getInt(7));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return i;
+		return i - 1;
 	}
 
 	private static void searchListPrompt(int numListing) {
-		if(numListing>1)
+		if(numListing > 0)
 			System.out.println("Enter number from 1-" + numListing + " to see more info");
 		else
 			System.out.println("There are no listings");
@@ -216,7 +302,7 @@ public class Application {
 	private static void printDashboardPrompt() {
 		System.out.println("Enter l to enlist a place");
 		System.out.println("Enter b to book a listing");
-		System.out.println("Enter h to look at history");
+		System.out.println("Enter h to look at history/booked/owned listings");
 		System.out.println("Enter s to sign out");
 	}
 	

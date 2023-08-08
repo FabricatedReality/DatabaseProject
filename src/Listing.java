@@ -158,10 +158,9 @@ public class Listing {
 	public static ResultSet getListings(String filter) {
 		Database d = Database.getInstance();
 		try {
-			String queryStr = "SELECT Calendar.lid, Listing.city, Listing.country, Calendar.price "
+			String queryStr = "SELECT Calendar.*, Listing.*  "
 					        + "FROM Calendar JOIN Listing ON Calendar.lid = Listing.lid "
-					        + "WHERE Calendar.renter IS NULL" + filter;
-			System.out.println(queryStr);
+					        + filter;
 			PreparedStatement p = d.getStatement(queryStr);
 			return p.executeQuery();
 		} catch (SQLException e) {
@@ -171,23 +170,14 @@ public class Listing {
 		}
 	}
 
-	public static void displayInfo(int lid) {
+	public static void displayInfo(ResultSet r) {
 		Database d = Database.getInstance();
 		try {
-			String queryStr = "SELECT Calendar.*, Listing.* "
-							+ "FROM Calendar JOIN Listing ON Calendar.lid = Listing.lid "
-					        + "WHERE Calendar.lid = ?";
-			PreparedStatement p = d.getStatement(queryStr);
-			p.setInt(1, lid);
-			ResultSet r = p.executeQuery();
-			r.next();
 			System.out.println(r.getString(16));
 			System.out.println(r.getString(14) + ", " + r.getString(15));
 			System.out.println("latitude: " + r.getDouble(11) + ", longitude: " + r.getDouble(12));
 			System.out.println("start: " + r.getDate(5).toString() + ", end: " + r.getDate(6).toString());
 			showAmenities(r.getInt(10));
-			p.close();
-			r.close();
 		} catch (SQLException e) {
 			System.err.println("display info failure!");
 			e.printStackTrace();
