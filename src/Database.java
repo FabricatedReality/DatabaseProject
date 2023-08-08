@@ -50,7 +50,7 @@ public class Database {
 	}
 	
 	public PreparedStatement getStatement(String query) throws SQLException {
-		return con.prepareStatement(query);
+		return con.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 	}
 	
 	// Executes query without any return, used for setting up database

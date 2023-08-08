@@ -158,13 +158,54 @@ public class Listing {
 	public static ResultSet getListings() {
 		Database d = Database.getInstance();
 		try {
-			String queryStr = "SELECT * FROM Calendar WHERE renter IS NULL";
+			String queryStr = "SELECT Calendar.lid, Listing.city, Listing.country, Calendar.price "
+					        + "FROM Calendar JOIN Listing ON Calendar.lid = Listing.lid "
+					        + "WHERE Calendar.renter IS NULL";
 			PreparedStatement p = d.getStatement(queryStr);
 			return p.executeQuery();
 		} catch (SQLException e) {
 			System.err.println("get listing query failure!");
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	public static void displayInfo(int lid) {
+		Database d = Database.getInstance();
+		try {
+			String queryStr = "SELECT Calendar.*, Listing.* "
+							+ "FROM Calendar JOIN Listing ON Calendar.lid = Listing.lid "
+					        + "WHERE Calendar.lid = ?";
+			PreparedStatement p = d.getStatement(queryStr);
+			p.setInt(1, lid);
+			ResultSet r = p.executeQuery();
+			r.next();
+			System.out.println(r.getString(16));
+			System.out.println(r.getString(14) + ", " + r.getString(15));
+			System.out.println("latitude: " + r.getDouble(11) + ", longitude" + r.getDouble(12));
+			System.out.println("start: " + r.getDate(5).toString() + ", end" + r.getDate(6).toString());
+			p.close();
+			r.close();
+		} catch (SQLException e) {
+			System.err.println("display info failure!");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void updateInfo(int lid, int uid) {
+		Database d = Database.getInstance();
+		try {
+			String queryStr = "UPDATE Calendar "
+							+ "SET renter = ? "
+					        + "WHERE lid = ?";
+			PreparedStatement p = d.getStatement(queryStr);
+			p.setInt(1, uid);
+			p.setInt(2, lid);
+			p.execute();
+			p.close();
+		} catch (SQLException e) {
+			System.err.println("update listing failure!");
+			e.printStackTrace();
 		}
 	}
 }
