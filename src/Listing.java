@@ -155,12 +155,13 @@ public class Listing {
 		return result;
 	}
 
-	public static ResultSet getListings() {
+	public static ResultSet getListings(String filter) {
 		Database d = Database.getInstance();
 		try {
 			String queryStr = "SELECT Calendar.lid, Listing.city, Listing.country, Calendar.price "
 					        + "FROM Calendar JOIN Listing ON Calendar.lid = Listing.lid "
-					        + "WHERE Calendar.renter IS NULL";
+					        + "WHERE Calendar.renter IS NULL" + filter;
+			System.out.println(queryStr);
 			PreparedStatement p = d.getStatement(queryStr);
 			return p.executeQuery();
 		} catch (SQLException e) {
@@ -182,8 +183,9 @@ public class Listing {
 			r.next();
 			System.out.println(r.getString(16));
 			System.out.println(r.getString(14) + ", " + r.getString(15));
-			System.out.println("latitude: " + r.getDouble(11) + ", longitude" + r.getDouble(12));
-			System.out.println("start: " + r.getDate(5).toString() + ", end" + r.getDate(6).toString());
+			System.out.println("latitude: " + r.getDouble(11) + ", longitude: " + r.getDouble(12));
+			System.out.println("start: " + r.getDate(5).toString() + ", end: " + r.getDate(6).toString());
+			showAmenities(r.getInt(10));
 			p.close();
 			r.close();
 		} catch (SQLException e) {
@@ -207,5 +209,24 @@ public class Listing {
 			System.err.println("update listing failure!");
 			e.printStackTrace();
 		}
+	}
+
+	// return amenities value of input, 0 if not an amenity
+	public static int toAmenities(String input) {
+		for(int i = 0; i < AMENITIES.length; i++) {
+			if(input.equals(AMENITIES[i]))
+				return (int)Math.pow(2, i);
+		}
+		return 0;
+	}
+	
+	public static void showAmenities(int amenities) {
+		System.out.print("Amenities: ");
+		for(int i = 0; i < AMENITIES.length; i++) {
+			int a = (int)Math.pow(2, i);
+			if((amenities & a) == a)
+				System.out.print(AMENITIES[i]+", ");
+		}
+		System.out.println();
 	}
 }

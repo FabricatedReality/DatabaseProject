@@ -40,6 +40,9 @@ public class Application {
 				u =  User.register(s);
 				dashboard(s);
 				break;
+			case "rp":
+				
+				break;
 			case "l":
 				u = User.login(s);
 				dashboard(s);
@@ -74,29 +77,108 @@ public class Application {
 	
 	private static void searchList(Scanner s) {
 		String input = "";
-		ResultSet r = Listing.getListings();
+		String filter = "";
 		while(!input.equals("b")) {
+			ResultSet r = Listing.getListings(filter);
 			int numListing = printListings(r);
 				
 			searchListPrompt(numListing);
 			
 			input = s.nextLine();
-			if(input.equals("s")) {
-				
-			} else if(input.equals("a")) {
-				
-			} else if(!input.equals("b")) {
-				try {
+			try {
+				if(input.equals("f")) {
+					filter = filterPage(s);
+				} else if(!input.equals("b")) {
 					int index = Integer.parseInt(input);
 					r.absolute(index);
 					Listing.displayInfo(r.getInt(1));
-					listPage(s, r.getInt(1))
-				} catch(Exception e) {
-					System.out.println("Invalid input!");
-					e.printStackTrace();
-				}
+					listPage(s, r.getInt(1));
+				r.close();
+			}
+			} catch(Exception e) {
+				System.out.println("Invalid input!");
+				e.printStackTrace();
 			}
 		}
+	}
+	
+	private static String filterPage(Scanner s) {
+		String input = "";
+		String filter = "";
+		boolean distanceFilter = false;
+		int amenities = 0;
+		while(!input.equals("f")) {
+			System.out.println("Enter amenities name to add filter to it");
+			System.out.println("Enter r to add distance filter");
+			System.out.println("Enter t to add type filter");
+			System.out.println("Enter n to add name filter");
+			System.out.println("Enter c to add city filter");
+			System.out.println("Enter co to add city filter");
+			System.out.println("Enter po to add postal filter");
+			System.out.println("Enter p to add price range filter");
+			System.out.println("Enter a to abandon filter");
+			System.out.println("Enter f if finished with filter");
+			input = s.nextLine();
+			switch(input) {
+			case "a":
+				return "";
+			case "r":
+				distanceFilter = true;
+				break;
+			case "t":
+				System.out.println("Enter the type");
+				filter += " AND (Listing.type = '" + s.nextLine() + "')";
+				break;
+			case "n":
+				System.out.println("Enter the exact name");
+				filter += " AND (Listing.name = '" + s.nextLine() + "')";
+				break;
+			case "c":
+				System.out.println("Enter the city name");
+				filter += " AND (Listing.city = '" + s.nextLine() + "')";
+				break;
+			case "co":
+				System.out.println("Enter the country name");
+				filter += " AND (Listing.country = '" + s.nextLine() + "')";
+				break;
+			case "po":
+				System.out.println("Enter the postal name");
+				filter += " AND (Listing.postal = '" + s.nextLine() + "')";
+				break;
+			case "p":
+				System.out.println("Enter the lowest price");
+				String low = s.nextLine();
+				System.out.println("Enter the highest price");
+				String high = s.nextLine();
+				filter += " AND (Calendar.price > " + low + " AND Calendar.price < " + high + ")";
+				break;
+			default:
+				amenities = amenities | Listing.toAmenities(input);
+			}
+		}
+		if(amenities>0)
+			filter += " AND (Listing.amenities & " + amenities + " = "+ amenities +")";
+		if(distanceFilter)
+			filter += distanceFilter(s);
+		return filter;
+	}
+
+	private static String distanceFilter(Scanner s) {
+		System.out.println("Enter the latitude");
+		String latitude = s.nextLine();
+		System.out.println("Enter the longitude");
+		String longitude = s.nextLine();
+		System.out.println("Enter the radius in km");
+		String radius = s.nextLine();
+		String filter = " AND ( 6371 * ACOS( COS(RADIANS("+ latitude +")) * "
+					  + "COS(RADIANS(Listing.latitude)) * COS(RADIANS(Listing.longitude) - "
+					  + "RADIANS("+ longitude +")) + SIN(RADIANS("+ latitude +")) * "
+					  + "SIN(RADIANS(Listing.latitude)))) <= " + radius
+					  + " ORDER BY ( 6371 * ACOS( COS(RADIANS("+ latitude +")) * "
+					  + "COS(RADIANS(Listing.latitude)) * COS(RADIANS(Listing.longitude) - "
+					  + "RADIANS("+ longitude +")) + SIN(RADIANS("+ latitude +")) * "
+					  + "SIN(RADIANS(Listing.latitude))))";
+		return filter;
 	}
 
 	private static void listPage(Scanner s, int lid) throws SQLException {
@@ -123,11 +205,11 @@ public class Application {
 	}
 
 	private static void searchListPrompt(int numListing) {
-		if(numListing>0)
+		if(numListing>1)
 			System.out.println("Enter number from 1-" + numListing + " to see more info");
 		else
 			System.out.println("There are no listings");
-		System.out.println("Enter a to show amentities for filter");
+		System.out.println("Enter f to modify filter");
 		System.out.println("Enter b to go back");
 	}
 
@@ -142,6 +224,7 @@ public class Application {
 		System.out.println("Enter i to initialize and load data into database");
 		System.out.println("Enter r to register");
 		System.out.println("Enter l to log in");
+		System.out.println("Enter rp to generate reports");
 		System.out.println("Enter q to quit program");
 	}
 }
