@@ -4,7 +4,7 @@ VALUES
     ('apartment', 32767, 40.7128, -74.0060, '10015', 'New York', 'USA', 'Broadway Towers'),
     ('guesthouse', 16711679, 48.8566, 2.3522, '75015', 'Paris', 'France', 'Louvre Loft'),
     ('house', 8388607, 55.7558, 37.6173, '101014', 'Moscow', 'Russia', 'Red Square Retreat'),
-    ('apartment', 0, 34.0522, -118.2437, '90016', 'Los Angeles', 'USA', 'Urban Oasis Apartments'),
+    ('apartment', 0, 34.0522, -118.2437, '90016', 'Seattle', 'USA', 'Urban Oasis Apartments'),
     ('hotel', 262143, 51.5174, -0.1278, 'SW1A 1AP', 'London', 'UK', 'Hyde Park ''View'' Hotel'),
     ('guesthouse', 32767, 40.7228, -74.0160, '10016', 'New York', 'USA', 'Charming Riverside Guesthouse'),
     ('house', 16711679, 48.8766, 2.3722, '75016', 'Paris', 'France', 'Eiffel Garden House'),

@@ -41,7 +41,7 @@ public class Application {
 				dashboard(s);
 				break;
 			case "rp":
-				
+				reports(s);
 				break;
 			case "l":
 				u = User.login(s);
@@ -51,6 +51,46 @@ public class Application {
 		}
 	}
 	
+	private static void reports(Scanner s) {
+		String input = "";
+		while(!input.equals("b")) {
+			System.out.println("Enter t to get report on # of listing");
+			System.out.println("Enter h to get report on 10% host of country");
+			System.out.println("Enter b to go back");
+			
+			input = s.nextLine();
+			switch(input) {
+			case "t":
+				numRanking(s);
+				break;
+			case "h":
+				Report.tenPercent();
+				break;
+			}
+		}
+	}
+
+	private static void numRanking(Scanner s) {
+		String input = "";
+		while(!input.equals("b")) {
+			System.out.println("Enter co to group by country");
+			System.out.println("Enter ci to group by city");
+			System.out.println("Enter p to group by postal");
+			System.out.println("Enter b to go back");
+			switch(s.nextLine()) {
+			case "co":
+				Report.numberListing("country");
+				break;
+			case "ci":
+				Report.numberListing("country, city");
+				break;
+			case "p":
+				Report.numberListing("country, city, postal");
+				break;
+			}
+		}
+	}
+
 	private static void dashboard(Scanner s) {
 		if(u == null)
 			return;
